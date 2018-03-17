@@ -1,13 +1,15 @@
 from urllib.parse import urlparse
 
 from django.contrib import messages
-from django.db.models import Q
 from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
+from django.db.models import Q
 from django.http import  HttpResponse, HttpResponseRedirect , Http404
 from django.shortcuts import render, get_object_or_404, redirect
 from django.utils import timezone
 
 # Create your views here.
+from comments.forms import CommentForm
+from comments.models import Comments
 from .forms import PostForm
 from .models import Post
 
@@ -44,10 +46,16 @@ def post_detail(request, slug=None): # retrive
         if not request.user.is_staff or not request.user.is_superuser:
             raise Http404
     share_string = urlparse(instance.content)
+    comment_form = CommentForm()
+
+    comments = instance.comments#Comments.objects.filter_by_instance(instance)
+
     context = {
         'title': instance.title,
         'instance':instance,
         'share_string': share_string.path,
+        'comments':comments,
+        'comment_form':comment_form,
     }
     return render(request, "post_detail.html", context)
     #return HttpResponse("<h1>Detail</h1>")

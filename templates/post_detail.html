@@ -23,6 +23,9 @@
 {% if instance.user.get_full_name %}
     <p>Author: {{ instance.user.get_full_name }}</p>
     {% endif %}
+
+
+
     <p><div class="fb-like" data-href="{{ request.build_absolute_uri }}" data-layout="button_count" data-action="like" data-size="small" data-show-faces="true" data-share="true"></div></p>
     <hr/>
 
@@ -47,9 +50,20 @@ Linkedin
 <div class="col-sm-12">
 
     <div class="post-detail-item">{{ instance.get_markdown }}</div>
-
 <hr/>
-    <div class="fb-comments" data-href="{{ request.build_absolute_uri }}" data-numposts="5"></div>
+    <div>
+        <p class="lead">Comments</p>
+        <hr/>
+        {% for comments in comments %}
+
+
+        <blockquote>
+          <p>{{ comments.content }}</p>
+          <footer>via {{ comments.user }} on {{ comments.timestamp }} app</footer>
+        </blockquote>
+        <hr/>
+        {% endfor %}
+    </div>
 </div>
     </div>
 </div>
