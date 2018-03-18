@@ -33,6 +33,18 @@
 
 {% include "messages_display.html" %}
 <div class="container">
+    <ol class="breadcrumb">
+        <li><a href="{% url 'posts:list' %}">Home</a></li>
+        {% block post_detail_link %}
+        {% endblock %}
+
+        {% if not request.user.is_authenticated %}
+        <li class="pull_right"><a href="{% url 'register' %}">Register</a> </li>
+        <li class="pull_right"><a href="{% url 'login' %}">login</a> </li>
+        {% else %}
+        <li class="pull_right"><a href="{% url 'logout' %}">logout</a> </li>
+        {% endif %}
+    </ol>
     {% block contant %}
     {% endblock contant %}
 </div>
