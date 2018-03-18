@@ -24,8 +24,11 @@ from accounts.views import (login_view, register_view, logout_view)
 urlpatterns = [
     url(r'^admin/', admin.site.urls),
     url(r'^comments/', include("comments.urls", namespace='comments')),
-    url(r'^posts/', include("posts.urls", namespace='posts')),
-    url(r'^login', login_view, name='login')
+
+    url(r'^login/', login_view, name='login'),
+    url(r'^logout/', logout_view, name='logout'),
+    url(r'^register/', register_view, name='register'),
+    url(r'^', include("posts.urls", namespace='posts')),
     #url(r'^posts/$', "<appname>.views.<function_name>"),
 ]
 
